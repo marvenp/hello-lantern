@@ -1,0 +1,29 @@
+# The workflow to test the 
+
+name:  React.js Master -Testing
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
+
+
+
+jobs:
+    buidltest:
+        name: Test the Master branch of {React App}
+        runs-on: ubuntu-latest
+        environment: dev
+
+        steps:
+        -   name: 'Checkout GitHub Action'
+            uses: actions/checkout@v3
+
+
+        -   name: Setup Node ${{ env.NODE_VERSION }} Environment
+            uses: actions/setup-node@v3
+            with: 
+                node-version: ${{ env.NODE_VERSION }}
+        
+        
