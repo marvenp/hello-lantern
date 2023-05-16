@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import logo from './lanternLogo.svg';
 import './App.css';
 
 function App() {
@@ -7,15 +7,15 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Join <code>Lantern</code> and get your client exciting Deals.
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="#"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Know Lantern
         </a>
       </header>
     </div>
