@@ -3,7 +3,7 @@ name:  React.js Main -Development
 
 on:
     push:
-        branches: [main]
+        branches: [actionTest]
 
 jobs:
     # BUILD THE REACT APPLICATION
