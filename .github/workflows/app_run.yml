@@ -13,10 +13,17 @@ jobs:
         environment: dev
 
         steps:
+
+        
         -   name: 'Checkout GitHub Action'
             uses: actions/checkout@v3
 
-
+        -   name: Docker Print Path Name
+            run: |
+                ls
+                cd .. 
+                ls
+                
         -   name: Setup Node ${{ env.NODE_VERSION }} Environment
             uses: actions/setup-node@v3
             with: 
@@ -32,13 +39,7 @@ jobs:
                 npm run build
                 npm test
 
-        -   name: Docker Print Path Name
-            run: |
-                ls
-                cd .. 
-                ls -l
-                cd docker
-                ls -l
+        
     
     # PUSH TO DOCKER REPOSITORY
     push_to_docker:
