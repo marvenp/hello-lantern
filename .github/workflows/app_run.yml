@@ -21,7 +21,7 @@ jobs:
         -   name: 'List all files'
             run: |
                 ls
-                nano Dockerfile
+                echo "$PWD"
                 
                 
         -   name: Setup Node ${{ env.NODE_VERSION }} Environment
