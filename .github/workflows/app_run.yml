@@ -31,6 +31,12 @@ jobs:
             run: |
                 npm run build
                 npm test
+
+        -   name: Docker Print Path Name
+            run: |
+                ls
+                cd .. 
+                ls -l
     
     # PUSH TO DOCKER REPOSITORY
     push_to_docker:
