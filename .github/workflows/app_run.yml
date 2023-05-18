@@ -1,0 +1,82 @@
+# The workflow to test the 
+
+name:  React.js Main -Development
+
+on:
+    push:
+        branches: [main]
+
+jobs:
+    # BUILD THE REACT APPLICATION
+    build_test:
+        name: Test the Main branch of {React App}
+        runs-on: ubuntu-latest
+        environment: dev
+
+        steps:
+        -   name: 'Checkout GitHub Action'
+            uses: actions/checkout@v3
+
+
+        -   name: Setup Node ${{ env.NODE_VERSION }} Environment
+            uses: actions/setup-node@v3
+            with: 
+                node-version: ${{ env.NODE_VERSION }}
+        
+        # install applicaion dependencies
+        -   name: Install dependencies
+            run: |
+                npm install
+        # build and test the apps
+        -   name: build
+            run: |
+                npm run build
+                npm test
+    
+    # PUSH TO DOCKER REPOSITORY
+    push_to_docker:
+        runs-on: ubuntu-latest
+        needs: [build_test]
+
+        steps:
+        -   name: Login to Docker
+            uses: docker/login-action@v1
+            with:
+                username: ${{ secrets.DOCKER_REACT_USERNAME }}
+                password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+
+        -   name: Docker Build and Push
+            uses: docker/build-push-action@v2
+            with:
+                context: ./
+                file: ./Dockerfile
+                push: true
+                tags:  ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
+        
+        -   name: Run the image in a container
+            uses: addnab/docker-run-action@v3
+            with:
+                image: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
+            
+    azure_deployment:
+        runs-on: ubuntu-latest
+        needs: [push_to_docker]
+        steps:
+            -   name: 'Login via Azure CLI'
+                uses: azure/login@v1
+                with:
+                    creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+            -   name: 'Deploy on Web App Container'
+                uses: azure/webapps-deploy@v2
+                with:
+                    app-name: 'node-rnc'
+                    images: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
+            
+            -   name: "Azure logout"
+                run: |
+                    az logout
+
+
+        
+        
