@@ -25,5 +25,14 @@ jobs:
             uses: actions/setup-node@v3
             with: 
                 node-version: ${{ env.NODE_VERSION }}
+
+        -   name: Print Directory
+            run: |
+                cd ..
+                ls
+                cd ..
+                ls
+                cd ..
+                ls
         
         
