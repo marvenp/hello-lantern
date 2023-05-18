@@ -74,7 +74,7 @@ jobs:
 
         
         -   name: Build Docker image
-            run: docker build -t  ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest -f ./Dockerfile .
+            run: docker build -t  ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest -f ./Dockerfile.Dockerfile .
  
 
         # -   name: Docker Build and Push
