@@ -51,9 +51,10 @@ jobs:
                 username: ${{ secrets.DOCKER_REACT_USERNAME }}
                 password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
+
         -   name: Docker Print Path Name
             run: |
-                echo "$(pwd)"
+                echo ls -d
                 
         -   name: Docker Build and Push
             uses: docker/build-push-action@v2
