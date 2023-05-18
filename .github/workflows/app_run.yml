@@ -54,7 +54,8 @@ jobs:
 
         -   name: Docker Print Path Name
             run: |
-                ls -l
+                cd .. |
+                ls -l |
 
         -   name: Docker Build and Push
             uses: docker/build-push-action@v2
