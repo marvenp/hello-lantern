@@ -18,10 +18,22 @@ jobs:
         -   name: 'Checkout GitHub Action'
             uses: actions/checkout@v3
 
-        -   name: 'List all files'
+        -   name: Print Directory
             run: |
-                ls
                 echo "$PWD"
+                ls
+                echo "============"
+                cd ..
+                echo "$PWD"
+                ls
+                echo "============"
+                cd ..
+                ls
+                echo "============"
+                cd ..
+                echo "$PWD"
+                ls
+                echo "============"
                 
                 
         -   name: Setup Node ${{ env.NODE_VERSION }} Environment
