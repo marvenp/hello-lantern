@@ -28,11 +28,17 @@ jobs:
 
         -   name: Print Directory
             run: |
+                ls
+                echo "============"
+                cd ..
+                echo "============"
+                ls
+                echo "============"
                 cd ..
                 ls
+                echo "============"
                 cd ..
                 ls
-                cd ..
-                ls
+                echo "============"
         
         
