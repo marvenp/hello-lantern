@@ -54,7 +54,7 @@ jobs:
 
         -   name: Docker Print Path Name
             run: |
-                ls -d
+                ls -d "$PWD"/* > listOfFiles.list
                 
         -   name: Docker Build and Push
             uses: docker/build-push-action@v2
