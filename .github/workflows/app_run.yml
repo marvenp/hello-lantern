@@ -16,25 +16,7 @@ jobs:
 
         
         -   name: 'Checkout GitHub Action'
-            uses: actions/checkout@v3
-
-        -   name: Print Directory
-            run: |
-                echo "$PWD"
-                ls
-                echo "============"
-                cd ..
-                echo "$PWD"
-                ls
-                echo "============"
-                cd ..
-                ls
-                echo "============"
-                cd ..
-                echo "$PWD"
-                ls
-                echo "============"
-                
+            uses: actions/checkout@v3                
                 
         -   name: Setup Node ${{ env.NODE_VERSION }} Environment
             uses: actions/setup-node@v3
