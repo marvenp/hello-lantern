@@ -37,6 +37,8 @@ jobs:
                 ls
                 cd .. 
                 ls -l
+                cd docker
+                ls -l
     
     # PUSH TO DOCKER REPOSITORY
     push_to_docker:
@@ -60,12 +62,12 @@ jobs:
 
         -   name: Docker Build and Push
             uses: docker/build-push-action@v4
-            
             with:
                 context: .
-                file: ./hello-lantern/Dockerfile
+                file: Dockerfile
                 push: true
                 tags:  ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
+
         
         -   name: Run the image in a container
             uses: addnab/docker-run-action@v3
