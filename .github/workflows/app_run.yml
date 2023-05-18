@@ -59,14 +59,18 @@ jobs:
                 username: ${{ secrets.DOCKER_REACT_USERNAME }}
                 password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
+        
+        -   name: Build Docker image
+            run: docker build -t  ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
+ 
 
-        -   name: Docker Build and Push
-            uses: docker/build-push-action@v4
-            with:
-                context: .
-                file: Dockerfile
-                push: true
-                tags:  ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
+        # -   name: Docker Build and Push
+        #     uses: docker/build-push-action@v4
+        #     with:
+        #         context: .
+        #         file: Dockerfile
+        #         push: true
+        #         tags:  ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
 
         
         -   name: Run the image in a container
