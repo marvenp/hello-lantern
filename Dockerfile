@@ -8,7 +8,14 @@ COPY package-lock.json .
 RUN npm install
 # Copy app files
 COPY . .
+RUN npm run build
+
+# Setup Nginx
+FROM nginx:1.19
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=development /app/build /usr/share/nginx/html
+
 # Expose port
-EXPOSE 3000
+EXPOSE 80
 # Start the app
-CMD [ "npm", "start" ]
+# CMD [ "npm", "start" ]
