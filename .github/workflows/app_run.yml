@@ -67,6 +67,7 @@ jobs:
         #     run: |
         #         ls
         #         docker build . -t ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest -f ./Dockerfile
+        
  
         # Docker Build and Push the Commit to Docker Hub
         -   name: Docker Build and Push
@@ -82,7 +83,7 @@ jobs:
             uses: addnab/docker-run-action@v3
             with:
                 image: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
-                options: '--name First_App -d -p 80:80'
+                options: '--name First_App -d -p 80:3000'
                 
             
     azure_deployment:
@@ -94,6 +95,11 @@ jobs:
                 uses: azure/login@v1
                 with:
                     creds: ${{ secrets.AZURE_CREDENTIALS }}
+            
+            -   uses: azure/appservice-settings@v1
+                with:
+                    app-name: 'demolantern'
+                    app-settings-json: '[{ "WEBSITES_PORT": "3000" }]'
 
             -   name: 'Deploy on Web App Container'
                 uses: azure/webapps-deploy@v2
