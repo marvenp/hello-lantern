@@ -94,7 +94,7 @@ jobs:
             -   name: 'Deploy on Web App Container'
                 uses: azure/webapps-deploy@v2
                 with:
-                    app-name: 'node-rnc'
+                    app-name: 'hello-lantern'
                     images: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
             
             -   name: "Azure logout"
