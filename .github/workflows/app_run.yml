@@ -99,6 +99,7 @@ jobs:
                 with:
                     app-name: 'demolantern'
                     images: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
+                    options: '--name First_App -d -p 80:3000'
             
             -   name: "Azure logout"
                 run: |
