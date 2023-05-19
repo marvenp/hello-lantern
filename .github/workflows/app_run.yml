@@ -14,21 +14,22 @@ jobs:
 
         steps:
 
-        
+        # Checkout Github Repo
         -   name: 'Checkout GitHub Action'
             uses: actions/checkout@v3                
                 
+        # Setup Node Environment
         -   name: Setup Node ${{ env.NODE_VERSION }} Environment
             uses: actions/setup-node@v3
             with: 
                 node-version: ${{ env.NODE_VERSION }}
         
         # install applicaion dependencies
-        -   name: Install dependencies
+        -   name: 'Install Dependencies'
             run: |
                 npm install
         # build and test the apps
-        -   name: build
+        -   name: 'Build React App'
             run: |
                 npm run build
                 npm test
@@ -41,38 +42,41 @@ jobs:
         needs: [build_test]
 
         steps:
-
-        -   name: Set up QEMU
+        
+        # Setup Docker Quick EMUlator
+        -   name: Setup QEMU
             uses: docker/setup-qemu-action@v2
         
-        -   name: Set up Docker Buildx
+        # Setup Docker Buildx
+        -   name: Setup Docker Buildx
             uses: docker/setup-buildx-action@v2
         
-        
+        # Login with Docker
         -   name: Login to Docker
             uses: docker/login-action@v1
             with:
                 username: ${{ secrets.DOCKER_REACT_USERNAME }}
                 password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
         
+        # Checkout Github Repo
         -   name: Checkout
             uses: actions/checkout@v2
         
-        -   name: Build Docker image
-            run: |
-                ls
-                docker build . -t ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest -f ./Dockerfile
+        # -   name: Build Docker image
+        #     run: |
+        #         ls
+        #         docker build . -t ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest -f ./Dockerfile
  
+        # Docker Build and Push the Commit to Docker Hub
+        -   name: Docker Build and Push
+            uses: docker/build-push-action@v4
+            with:
+                context: .
+                file: ./Dockerfile
+                push: true
+                tags:  ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
 
-        # -   name: Docker Build and Push
-        #     uses: docker/build-push-action@v4
-        #     with:
-        #         context: .
-        #         file: Dockerfile
-        #         push: true
-        #         tags:  ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
-
-        
+        # Run the Container 
         -   name: Run the image in a container
             uses: addnab/docker-run-action@v3
             with:
