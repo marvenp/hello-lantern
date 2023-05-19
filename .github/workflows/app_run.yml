@@ -82,7 +82,7 @@ jobs:
             uses: addnab/docker-run-action@v3
             with:
                 image: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
-                options: '-d -p 3000:3000'
+                options: '--name First_App -d -p 3000:80'
                 
             
     azure_deployment:
