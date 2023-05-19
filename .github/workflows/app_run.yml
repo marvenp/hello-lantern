@@ -38,6 +38,7 @@ jobs:
     
     # PUSH TO DOCKER REPOSITORY
     push_to_docker:
+        name: Push to Docker Hub
         runs-on: ubuntu-latest
         needs: [build_test]
 
@@ -81,7 +82,8 @@ jobs:
             uses: addnab/docker-run-action@v3
             with:
                 image: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
-                options: '-d -p 3000:80'
+                options: '-d -p 3000:3000'
+                
             
     azure_deployment:
         runs-on: ubuntu-latest
