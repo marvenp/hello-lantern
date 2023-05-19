@@ -81,6 +81,7 @@ jobs:
             uses: addnab/docker-run-action@v3
             with:
                 image: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
+                options: '-d -p 3000:80'
             
     azure_deployment:
         runs-on: ubuntu-latest
@@ -94,7 +95,7 @@ jobs:
             -   name: 'Deploy on Web App Container'
                 uses: azure/webapps-deploy@v2
                 with:
-                    app-name: 'app'
+                    app-name: 'demolantern'
                     images: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
             
             -   name: "Azure logout"
