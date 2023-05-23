@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Join <code>Lantern</code> and get your client exciting Deals.
+          Join <code>Lantern</code> and get your client exciting Deals, ARTEM!
         </p>
         <a
           className="App-link"
