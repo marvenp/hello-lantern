@@ -96,7 +96,8 @@ jobs:
                 with:
                     creds: ${{ secrets.AZURE_CREDENTIALS }}
             
-            -   uses: azure/appservice-settings@v1
+            -   name: 'Setup Website PORT'
+                uses: azure/appservice-settings@v1
                 with:
                     app-name: 'demolantern'
                     app-settings-json: '[{ "WEBSITES_PORT": "3000" }]'
