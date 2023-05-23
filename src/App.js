@@ -19,6 +19,7 @@ function App() {
         >
           Know Lantern
         </a>
+        <p>Solutions Team Lantern Capital</p>
       </header>
     </div>
     </div>
