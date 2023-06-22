@@ -98,6 +98,7 @@ jobs:
             run: |
                 n=2
                 concatenated_values=""
+                var_name=""
                 for ((i=1; i<=n; i++)); do
                     var_name = "ENV_VAR_${i}"
                     env_var_value=${!var_name}
