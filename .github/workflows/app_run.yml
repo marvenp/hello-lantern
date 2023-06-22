@@ -85,28 +85,7 @@ jobs:
         #         image: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
         #         options: '--name First_App -d -p 80:3000'
                 
-    echo:
-        name: Azure Deployment
-        runs-on: ubuntu-latest
-        needs: [push_to_docker]
-        environment: dev
-        env:
-            ENV_VAR_1: ${{ secrets.ENV_VAR_1 }}
-            ENV_VAR_2: ${{ secrets.ENV_VAR_2 }}
-        steps:
-        -   name: "Testing creation of ENV"
-            run: |
-                n=2
-                concatenated_values=""
-                var_name=""
-                for ((i=1; i<=n; i++)); 
-                do
-                    var_name="ENV_VAR_${i}"
-                    env_var_value=${{ vars[format('{0}',$ $var_name)] }}
-                    concatenated_values="$concatenated_values $var_name"
-                done
-
-                echo "Concatenated Env Values = $concatenated_values"
+    
 
 
     azure_deployment:
