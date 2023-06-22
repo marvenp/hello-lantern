@@ -102,54 +102,78 @@ jobs:
                 for ((i=1; i<=n; i++)); 
                 do
                     var_name="ENV_VAR_${i}"
-                    env_var_value=$(printenv "$var_name")
+                    env_var_value=${{ vars[format('{0}',$ $var_name)] }}
                     concatenated_values="$concatenated_values $var_name"
                 done
 
                 echo "Concatenated Env Values = $concatenated_values"
 
 
-    # azure_deployment:
-    #     name: Azure Deployment
-    #     runs-on: ubuntu-latest
-    #     needs: [push_to_docker]
-    #     environment: dev
-    #     steps:
-    #     -   name: 'Login via Azure CLI'
-    #         uses: azure/login@v1
-    #         with:
-    #             creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
-    #     -   name: 'Azure Key Vault Creds'
-    #         uses: Azure/get-keyvault-secrets@v1
-    #         with:
-    #             keyvault: "lantern-demo"
-    #             secrets: 'DOCKER-ACCESS-TOKEN, DOCKER-REACT-USERNAME, REACT-APP-COMPANY-NAME, REACT-APP-USERNAME'
-    #         id: keyVaultSecrets
+    azure_deployment:
+        name: Azure Deployment
+        runs-on: ubuntu-latest
+        needs: [push_to_docker]
+        environment: dev
+        steps:
+        -   name: 'Login via Azure CLI'
+            uses: azure/login@v1
+            with:
+                creds: ${{ secrets.AZURE_CREDENTIALS }}
+       
+        # -   name: "Testing creation of ENV"
+        #     run: |
+        #         n=1
+        #         concatenated_values=""
+        #         var_name=""
+        #         for ((i=1; i<=n; i++)); 
+        #         do
+        #             var_name="ENV_VAR_${i}"
+        #             concatenated_values="$concatenated_values $var_name"
+        #         done
+        #         echo "::set-output name=concatenated_values::$concatenated_values"
+        #     id: env_list
 
-    #     # -   name: "Echo The Secrets"
-    #     #     run: |
-    #     #         echo "${{ steps.keyVaultSecrets.outputs.DOCKER-REACT-USERNAME }}"
-    #     #         echo "${{ steps.keyVaultSecrets.outputs.REACT-APP-COMPANY-NAME}}"
-    #     #         echo "${{ steps.keyVaultSecrets.outputs.REACT-APP-USERNAME }}"
+
+        -   name: 'Azure Key Vault Creds'
+            uses: Azure/get-keyvault-secrets@v1
+            with:
+                keyvault: "lantern-demo"
+                secrets: ${{steps.env_list.outputs.env_list}}
+            id: keyVaultSecrets
+
+        # -   name: 'Azure Env List Injection String'
+        #     run: |
+        #         n=1
+        #         concatenated_values=""
+        #         var_name=""
+        #         for ((i=1; i<=n; i++)); 
+        #         do
+        #             var_name="ENV_VAR_${i}"
+        #             concatenated_values="$concatenated_values $var_name=" 
+        #             concatenated_values="$concatenated_values ${{ steps.keyVaultSecrets.outputs['${0}'.format($var_name)] }}"
+
+        -   name: "Echo The Secrets"
+            run: |
+                echo "${{ steps.keyVaultSecrets.outputs.secrets }}"
         
-    #     -   name: Deploy to Azure Container Apps
-    #         uses: azure/container-apps-deploy-action@v1
-    #         with:
-    #             registryUrl: registry.hub.docker.com
-    #             registryUsername: ${{ steps.keyVaultSecrets.outputs.DOCKER-REACT-USERNAME }}
-    #             registryPassword: ${{ steps.keyVaultSecrets.outputs.DOCKER-ACCESS-TOKEN }}
-    #             imageToDeploy: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
-    #             targetPort: 3000
-    #             resourceGroup: lanterndemo
-    #             containerAppName: hello-lantern    
-    #             environmentVariables: REACT_APP_COMPANY_NAME="${{steps.keyVaultSecrets.outputs.REACT-APP-COMPANY-NAME}}"
-    #                 REACT_APP_USERNAME="${{steps.keyVaultSecrets.outputs.REACT-APP-USERNAME}}"
+        -   name: Deploy to Azure Container Apps
+            uses: azure/container-apps-deploy-action@v1
+            with:
+                registryUrl: registry.hub.docker.com
+                registryUsername: ${{ steps.keyVaultSecrets.outputs.DOCKER-REACT-USERNAME }}
+                registryPassword: ${{ steps.keyVaultSecrets.outputs.DOCKER-ACCESS-TOKEN }}
+                imageToDeploy: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
+                targetPort: 3000
+                resourceGroup: lanterndemo
+                containerAppName: hello-lantern   
+                 
+                # environmentVariables: REACT_APP_COMPANY_NAME="${{steps.keyVaultSecrets.outputs.REACT-APP-COMPANY-NAME}}"
+                #     REACT_APP_USERNAME="${{steps.keyVaultSecrets.outputs.REACT-APP-USERNAME}}"
                 
                 
-    #     -   name: "Azure logout"
-    #         run: |
-    #             az logout
+        -   name: "Azure logout"
+            run: |
+                az logout
 
 
         
