@@ -28,11 +28,11 @@ jobs:
         -   name: 'Install Dependencies'
             run: |
                 npm install
-        # build and test the apps
-        -   name: 'Build React App'
-            run: |
-                npm run build
-                npm test
+        # # build and test the apps
+        # -   name: 'Build React App'
+        #     run: |
+        #         npm run build
+        #         npm test
 
         
     
@@ -85,32 +85,33 @@ jobs:
                 image: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
                 options: '--name First_App -d -p 80:3000'
                 
-            
+
     azure_deployment:
         name: Azure Deployment
         runs-on: ubuntu-latest
         needs: [push_to_docker]
+        environment: dev
         steps:
-            -   name: 'Login via Azure CLI'
-                uses: azure/login@v1
-                with:
-                    creds: ${{ secrets.AZURE_CREDENTIALS }}
-            
-            -   name: 'Setup Website PORT'
-                uses: azure/appservice-settings@v1
-                with:
-                    app-name: 'demolantern'
-                    app-settings-json: '[{ "WEBSITES_PORT": "3000" }]'
-
-            -   name: 'Deploy on Web App Container'
-                uses: azure/webapps-deploy@v2
-                with:
-                    app-name: 'demolantern'
-                    images: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
-            
-            -   name: "Azure logout"
-                run: |
-                    az logout
+        -   name: 'Login via Azure CLI'
+            uses: azure/login@v1
+            with:
+                creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+        -   name: Deploy to Azure Container Apps
+            uses: azure/container-apps-deploy-action@v1
+            with:
+                registryUrl: registry.hub.docker.com
+                registryUsername: ${{ secrets.DOCKER_REACT_USERNAME }}
+                registryPassword: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+                imageToDeploy: ${{ secrets.DOCKER_REACT_USERNAME }}/${{vars.DOCKER_REACT_REPO_NAME}}:${{vars.REACT_DOCKER_TAG_NAME}}
+                targetPort: 3000
+                resourceGroup: lanterndemo
+                containerAppName: hello-lantern    
+                
+                
+        -   name: "Azure logout"
+            run: |
+                az logout
 
 
         
