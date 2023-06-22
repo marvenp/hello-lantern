@@ -101,27 +101,27 @@ jobs:
             uses: Azure/get-keyvault-secrets@v1
             with:
                 keyvault: "lantern-demo"
-                secrets: 'DOCKER-REACT-USERNAME, REACT-APP-COMPANY-NAME, REACT-APP-USERNAME'
+                secrets: 'DOCKER-ACCESS-TOKEN, DOCKER-REACT-USERNAME, REACT-APP-COMPANY-NAME, REACT-APP-USERNAME'
             id: keyVaultSecrets
 
-        -   name: "Echo The Secrets"
-            run: |
-                echo "${{ steps.keyVaultSecrets.outputs.DOCKER_REACT_USERNAME }}"
-                echo "${{ steps.keyVaultSecrets.outputs.REACT-APP-COMPANY-NAME}}"
-                echo "${{ steps.keyVaultSecrets.outputs.REACT-APP-USERNAME }}"
+        # -   name: "Echo The Secrets"
+        #     run: |
+        #         echo "${{ steps.keyVaultSecrets.outputs.DOCKER-REACT-USERNAME }}"
+        #         echo "${{ steps.keyVaultSecrets.outputs.REACT-APP-COMPANY-NAME}}"
+        #         echo "${{ steps.keyVaultSecrets.outputs.REACT-APP-USERNAME }}"
         
-        # -   name: Deploy to Azure Container Apps
-        #     uses: azure/container-apps-deploy-action@v1
-        #     with:
-        #         registryUrl: registry.hub.docker.com
-        #         registryUsername: ${{ secrets.DOCKER_REACT_USERNAME }}
-        #         registryPassword: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-        #         imageToDeploy: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
-        #         targetPort: 3000
-        #         resourceGroup: lanterndemo
-        #         containerAppName: hello-lantern    
-        #         environmentVariables: REACT_APP_COMPANY_NAME=`${{vars.REACT_APP_COMPANY_NAME}}` 
-        #             REACT_APP_USERNAME=`${{vars.REACT_APP_USERNAME}}`
+        -   name: Deploy to Azure Container Apps
+            uses: azure/container-apps-deploy-action@v1
+            with:
+                registryUrl: registry.hub.docker.com
+                registryUsername: ${{ steps.keyVaultSecrets.outputs.DOCKER-REACT-USERNAME }}
+                registryPassword: ${{ steps.keyVaultSecrets.outputs.DOCKER-ACCESS-TOKEN }}
+                imageToDeploy: ${{ steps.keyVaultSecrets.outputs.DOCKER_REACT_USERNAME }}/hello-lantern:latest
+                targetPort: 3000
+                resourceGroup: lanterndemo
+                containerAppName: hello-lantern    
+                environmentVariables: REACT_APP_COMPANY_NAME=`${{vars.REACT_APP_COMPANY_NAME}}` 
+                    REACT_APP_USERNAME=`${{vars.REACT_APP_USERNAME}}`
                 
                 
         -   name: "Azure logout"
