@@ -9,7 +9,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Join <code>Lantern</code> and get your client exciting Deals, ARTEM!!
+          Join <code>Lantern</code> and get your client exciting Deals, {process.env.REACT_APP_USERNAME || "Username"}!
         </p>
         <a
           className="App-link"
@@ -19,7 +19,7 @@ function App() {
         >
           Know Lantern
         </a>
-        <p>Solutions Team Lantern Capital</p>
+        <p>Solutions Team: {process.env.REACT_APP_COMPANY_NAME || "Company Name"}</p>
       </header>
     </div>
     </div>
