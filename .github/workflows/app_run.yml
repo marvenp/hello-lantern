@@ -103,7 +103,7 @@ jobs:
                 do
                     var_name="ENV_VAR_${i}"
                     env_var_value=${!var_name}
-                    concatenated_values="$concatenated_values $env_var_value"
+                    concatenated_values="$concatenated_values $var_name"
                 done
 
                 echo "Concatenated Env Values = $concatenated_values"
