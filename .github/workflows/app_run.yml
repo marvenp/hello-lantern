@@ -106,9 +106,9 @@ jobs:
 
         -   name: "Echo The Secrets"
             run: |
-                echo "`Docker Username: ${{ steps.keyVaultSecrets.outputs.DOCKER_REACT_USERNAME }}`"
-                echo "`React Company Name: ${{ steps.keyVaultSecrets.outputs.REACT-APP-COMPANY-NAME}}`"
-                echo "`React User Name: ${{ steps.keyVaultSecrets.outputs.REACT-APP-USERNAME }}`"
+                echo "${{ steps.keyVaultSecrets.outputs.DOCKER_REACT_USERNAME }}"
+                echo "${{ steps.keyVaultSecrets.outputs.REACT-APP-COMPANY-NAME}}"
+                echo "${{ steps.keyVaultSecrets.outputs.REACT-APP-USERNAME }}"
         
         # -   name: Deploy to Azure Container Apps
         #     uses: azure/container-apps-deploy-action@v1
