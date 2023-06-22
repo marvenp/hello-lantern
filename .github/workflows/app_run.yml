@@ -103,7 +103,7 @@ jobs:
                 registryUrl: registry.hub.docker.com
                 registryUsername: ${{ secrets.DOCKER_REACT_USERNAME }}
                 registryPassword: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-                imageToDeploy: ${{ secrets.DOCKER_REACT_USERNAME }}/${{vars.DOCKER_REACT_REPO_NAME}}:${{vars.REACT_DOCKER_TAG_NAME}}
+                imageToDeploy: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
                 targetPort: 3000
                 resourceGroup: lanterndemo
                 containerAppName: hello-lantern    
