@@ -120,8 +120,8 @@ jobs:
                 targetPort: 3000
                 resourceGroup: lanterndemo
                 containerAppName: hello-lantern    
-                environmentVariables: REACT_APP_COMPANY_NAME=`${{vars.REACT_APP_COMPANY_NAME}}` 
-                    REACT_APP_USERNAME=`${{vars.REACT_APP_USERNAME}}`
+                environmentVariables: REACT_APP_COMPANY_NAME="${{vars.REACT_APP_COMPANY_NAME}}"
+                    REACT_APP_USERNAME="${{vars.REACT_APP_USERNAME}}"
                 
                 
         -   name: "Azure logout"
