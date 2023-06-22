@@ -98,6 +98,14 @@ jobs:
             uses: azure/login@v1
             with:
                 creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+        -   name: 'Azure Key Vault Creds'
+            id: keyVaultSecrets
+            uses: Azure/get-keyvault-secrets@v1
+            with:
+                keyvault: "lantern-demo"
+                secrets: "DOCKER-REACT-USERNAME DOCKER-ACCESS-TOKEN REACT-APP-USERNAME REACT-APP-COMPANY-NAME"
+            
        
         # -   name: "Testing creation of ENV"
         #     run: |
@@ -113,12 +121,7 @@ jobs:
         #     id: env_list
 
 
-        -   name: 'Azure Key Vault Creds'
-            uses: Azure/get-keyvault-secrets@v1
-            with:
-                keyvault: "lantern-demo"
-                secrets: ${{steps.env_list.outputs.env_list}}
-            id: keyVaultSecrets
+       
 
         # -   name: 'Azure Env List Injection String'
         #     run: |
