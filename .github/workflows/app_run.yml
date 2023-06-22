@@ -70,20 +70,20 @@ jobs:
         
  
         # Docker Build and Push the Commit to Docker Hub
-        -   name: Docker Build and Push
-            uses: docker/build-push-action@v4
-            with:
-                context: .
-                file: ./Dockerfile
-                push: true
-                tags:  ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
+        # -   name: Docker Build and Push
+        #     uses: docker/build-push-action@v4
+        #     with:
+        #         context: .
+        #         file: ./Dockerfile
+        #         push: true
+        #         tags:  ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
 
-        # Run the Container 
-        -   name: Run the image in a container
-            uses: addnab/docker-run-action@v3
-            with:
-                image: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
-                options: '--name First_App -d -p 80:3000'
+        # # Run the Container 
+        # -   name: Run the image in a container
+        #     uses: addnab/docker-run-action@v3
+        #     with:
+        #         image: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
+        #         options: '--name First_App -d -p 80:3000'
                 
 
     azure_deployment:
@@ -106,9 +106,9 @@ jobs:
 
         -   name: "Echo The Secrets"
             run: |
-                echo "`${{ steps.keyVaultSecrets.outputs.DOCKER_REACT_USERNAME }}"
-                echo "`${{ steps.keyVaultSecrets.outputs.REACT-APP-COMPANY-NAME}}"
-                echo "`${{ steps.keyVaultSecrets.outputs.REACT-APP-USERNAME }}"
+                echo "`Docker Username: ${{ steps.keyVaultSecrets.outputs.DOCKER_REACT_USERNAME }}`"
+                echo "`React Company Name: ${{ steps.keyVaultSecrets.outputs.REACT-APP-COMPANY-NAME}}`"
+                echo "`React User Name: ${{ steps.keyVaultSecrets.outputs.REACT-APP-USERNAME }}`"
         
         # -   name: Deploy to Azure Container Apps
         #     uses: azure/container-apps-deploy-action@v1
