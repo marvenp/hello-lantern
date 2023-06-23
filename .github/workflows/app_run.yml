@@ -150,6 +150,7 @@ jobs:
                 containerAppName: hello-lantern
                 environmentVariables: REACT_APP_COMPANY_NAME="${{steps.keyVaultSecrets.outputs.REACT-APP-COMPANY-NAME}}"
                     REACT_APP_USERNAME="${{steps.keyVaultSecrets.outputs.REACT-APP-USERNAME}}"
+                    REACT_APP_ARTEM="${{steps.keyVaultSecrets.outputs.REACT-APP-ARTEM}}"
                 
                 
         -   name: "Azure logout"

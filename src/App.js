@@ -20,6 +20,7 @@ function App() {
           Know Lantern
         </a>
         <p>Solutions Team: {process.env.REACT_APP_COMPANY_NAME || "Company Name"}</p>
+        <p>Solutions Manager: {process.env.REACT_APP_ARTEM || "Company Name"}</p>
       </header>
     </div>
     </div>
