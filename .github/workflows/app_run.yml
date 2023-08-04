@@ -78,7 +78,7 @@ jobs:
         -   name: Build Docker image
             run: |
                 ls
-                docker build . -t ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest-${{ github.run_number }} -f ./Dockerfile
+                docker build . -t ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest-${{ github.run_number }}.${{ github.run_attempt }} -f ./Dockerfile
         
  
         # Docker Build and Push the Commit to Docker Hub
@@ -88,7 +88,7 @@ jobs:
                 context: .
                 file: ./Dockerfile
                 push: true
-                tags:  ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest-${{ github.run_number }}
+                tags:  ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest-${{ github.run_number }}.${{ github.run_attempt }}
 
         # # Run the Container 
         # -   name: Run the image in a container
