@@ -150,20 +150,20 @@ jobs:
             run: |
                 echo "${{ steps.keyVaultSecrets.outputs }}"
         
-        -   name: Deploy to Azure Container Apps
-            uses: azure/container-apps-deploy-action@v1
-            with:
-                registryUrl: registry.hub.docker.com
-                registryUsername: ${{ steps.keyVaultSecrets.outputs.DOCKER-REACT-USERNAME }}
-                registryPassword: ${{ steps.keyVaultSecrets.outputs.DOCKER-ACCESS-TOKEN }}
-                imageToDeploy: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
-                targetPort: 3000
-                resourceGroup: lanterndemo
-                containerAppName: hello-lantern
-                environmentVariables: REACT_APP_COMPANY_NAME="${{steps.keyVaultSecrets.outputs.REACT-APP-COMPANY-NAME}}"
-                    REACT_APP_USERNAME="${{steps.keyVaultSecrets.outputs.REACT-APP-USERNAME}}"
-                    REACT_APP_ARTEM="${{steps.keyVaultSecrets.outputs.REACT-APP-ARTEM}}"
-                    VAR1="${{steps.keyVaultSecrets.outputs.VAR1}}"
+        # -   name: Deploy to Azure Container Apps
+        #     uses: azure/container-apps-deploy-action@v1
+        #     with:
+        #         registryUrl: registry.hub.docker.com
+        #         registryUsername: ${{ steps.keyVaultSecrets.outputs.DOCKER-REACT-USERNAME }}
+        #         registryPassword: ${{ steps.keyVaultSecrets.outputs.DOCKER-ACCESS-TOKEN }}
+        #         imageToDeploy: ${{ secrets.DOCKER_REACT_USERNAME }}/hello-lantern:latest
+        #         targetPort: 3000
+        #         resourceGroup: lanterndemo
+        #         containerAppName: hello-lantern
+        #         environmentVariables: REACT_APP_COMPANY_NAME="${{steps.keyVaultSecrets.outputs.REACT-APP-COMPANY-NAME}}"
+        #             REACT_APP_USERNAME="${{steps.keyVaultSecrets.outputs.REACT-APP-USERNAME}}"
+        #             REACT_APP_ARTEM="${{steps.keyVaultSecrets.outputs.REACT-APP-ARTEM}}"
+        #             VAR1="${{steps.keyVaultSecrets.outputs.VAR1}}"
                 
                 
         -   name: "Azure logout"
