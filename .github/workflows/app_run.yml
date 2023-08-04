@@ -151,6 +151,7 @@ jobs:
                 environmentVariables: REACT_APP_COMPANY_NAME="${{steps.keyVaultSecrets.outputs.REACT-APP-COMPANY-NAME}}"
                     REACT_APP_USERNAME="${{steps.keyVaultSecrets.outputs.REACT-APP-USERNAME}}"
                     REACT_APP_ARTEM="${{steps.keyVaultSecrets.outputs.REACT-APP-ARTEM}}"
+                    VAR1="${{steps.keyVaultSecrets.outputs.VAR1}}"
                 
                 
         -   name: "Azure logout"
